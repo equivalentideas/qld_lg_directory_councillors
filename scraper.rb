@@ -22,3 +22,33 @@
 # on Morph for Ruby (https://github.com/openaustralia/morph-docker-ruby/blob/master/Gemfile) and all that matters
 # is that your final data is written to an Sqlite database called data.sqlite in the current working directory which
 # has at least a table called data.
+
+require "open-uri"
+require "openssl"
+require "json"
+
+url = "https://services.dsdip.qld.gov.au/lgguide/sampleData/lgaInfo.json"
+
+councils = JSON.parse(open(url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).read)
+
+councils.each do |council|
+  #p council
+  council_name = council["council_name"]
+  council_website = council["website_url"]
+  record = {
+    "councillor" => council["mayor"],
+    "position" => "mayor",
+    "council_name" => council_name,
+    "council_website" => council_website
+  }
+  p record
+  councillors = council["councilors"]
+  councillors.each do |councillor|
+    record = {
+      "councillor" => councillor["name"],
+      "council_name" => council_name,
+      "council_website" => council_website
+    }
+    p record
+  end
+end
