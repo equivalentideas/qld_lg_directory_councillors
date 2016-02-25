@@ -22,7 +22,8 @@ councils.each do |council|
     "councillor" => council["mayor"],
     "position" => "mayor",
     "council_name" => council_name,
-    "council_website" => council_website
+    "council_website" => council_website,
+    "council_email" => council["email"]
   }
 
   p record
@@ -35,7 +36,8 @@ councils.each do |council|
       "id" => create_id(council_name, councillor["name"]),
       "councillor" => councillor["name"],
       "council_name" => council_name,
-      "council_website" => council_website
+      "council_website" => council_website,
+      "council_email" => council["email"]
     }
 
     p record
